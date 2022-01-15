@@ -20,7 +20,7 @@ export async function getAccounts() {
 
     console.log(DarkForest);
 
-    let calldata = spawnCalldata(40, 40);
+    let calldata = await spawnCalldata(40, 40);
 
     console.log(calldata);
 }

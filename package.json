@@ -9,12 +9,15 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "assert": "^2.0.0",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",
     "bfj": "^7.0.2",
+    "browserify-fs": "^1.0.0",
     "browserslist": "^4.18.1",
+    "buffer": "^6.0.3",
     "camelcase": "^6.2.1",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "crypto-browserify": "^3.12.0",
@@ -34,6 +37,8 @@
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
     "mini-css-extract-plugin": "^2.4.5",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
     "postcss": "^8.4.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
@@ -51,9 +56,13 @@
     "semver": "^7.3.5",
     "snarkjs": "^0.4.10",
     "source-map-loader": "^3.0.0",
+    "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
+    "util": "^0.12.4",
+    "wasmbuilder": "^0.0.11",
+    "wasmsnark": "^0.0.10",
     "web-vitals": "^2.1.3",
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",
@@ -61,7 +70,7 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "BROWSER=none node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
@@ -138,5 +147,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "process": "^0.11.10",
+    "react-error-overlay": "^6.0.9"
   }
 }

@@ -1,22 +1,20 @@
 /* global BigInt */
 
-import { generateWitness } from "./generate_witness.js";
+import { generateWitness } from "./generate_witness";
 import { groth16 } from "snarkjs";
-//import ff from "ffjavascript";
-//const { unstringifyBigInts } = ff.utils;
 
 function unstringifyBigInts(o) {
-    if ((typeof (o) == "string") && (/^[0-9]+$/.test(o))) {
+    if ((typeof(o) == "string") && (/^[0-9]+$/.test(o) ))  {
         return BigInt(o);
-    } else if ((typeof (o) == "string") && (/^0x[0-9a-fA-F]+$/.test(o))) {
+    } else if ((typeof(o) == "string") && (/^0x[0-9a-fA-F]+$/.test(o) ))  {
         return BigInt(o);
     } else if (Array.isArray(o)) {
         return o.map(unstringifyBigInts);
     } else if (typeof o == "object") {
-        if (o === null) return null;
+        if (o===null) return null;
         const res = {};
         const keys = Object.keys(o);
-        keys.forEach((k) => {
+        keys.forEach( (k) => {
             res[k] = unstringifyBigInts(o[k]);
         });
         return res;
@@ -43,7 +41,7 @@ export async function spawnCalldata(x, y) {
         });
 
     if (!generateWitnessSuccess) { return; }
-    
+
     const { proof, publicSignals } = await groth16.prove('spawn_0001.zkey', witness);
 
     const editedPublicSignals = unstringifyBigInts(publicSignals);
