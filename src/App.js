@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import { getAccounts } from './spawn/main'
+import { connectDarkForest, spawnPosition } from './spawn/main'
 
 function App() {
-  getAccounts();
+  connectDarkForest();
+  spawnPosition(40,40);
   return (
     <div className="App">
       <header className="App-header">
