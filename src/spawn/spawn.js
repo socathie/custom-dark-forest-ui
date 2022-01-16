@@ -32,13 +32,15 @@ export async function spawnCalldata(x, y) {
 
     let generateWitnessSuccess = true;
 
-    console.log(generateWitness);
+    //console.log(generateWitness);
 
     let witness = await generateWitness(input).then()
         .catch((error) => {
             console.error(error);
             generateWitnessSuccess = false;
         });
+    
+    //console.log(witness);
 
     if (!generateWitnessSuccess) { return; }
 
