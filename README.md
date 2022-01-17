@@ -11,3 +11,4 @@ This repo is a minimal UI to interact with contracts developed in [custom-dark-f
 3. Deploy the contracts in [custom-dark-forest](https://github.com/socathie/custom-dark-forest) with hardhat.
 4. Replace the address in `src/address.json` with the deployed Dark Forest contract address.
 5. Then run `npm start` in this directory.
+6. Import the private key(s) from your chain to MetaMask.

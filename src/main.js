@@ -1,19 +1,18 @@
 import { ethers } from "ethers";
 import { spawnCalldata } from './spawn/spawn';
 import address from './address.json'
-
-const abi = [
-    'function spawn (uint[2] a, uint[2][2] b, uint[2] c, uint[1] input)'
-]
+import darkForestArtifact from './artifacts/DarkForest.json'
 
 let darkForest;
 
 export async function connectDarkForest() {
-    let provider = new ethers.providers.JsonRpcProvider();
+    const { ethereum } = window;
+
+    let provider = new ethers.providers.Web3Provider(ethereum);
     let signer = provider.getSigner();
     console.log('signer: ', await signer.getAddress());
 
-    darkForest = new ethers.Contract(address['DarkForest'], abi, signer);
+    darkForest = new ethers.Contract(address['DarkForest'], darkForestArtifact.abi, signer);
 
     console.log("Connect to Dark Forest Contract:", darkForest);
 }
@@ -26,18 +25,18 @@ export async function spawnPosition(x, y) {
 
     //console.log(calldata[3]);
 
-    let errorString;
+    let errorMsg;
 
     let result = await darkForest.spawn(calldata[0], calldata[1], calldata[2], calldata[3])
         .catch((error) => {
-            errorString = error.toString();
+            errorMsg = error.data.message;
         });
 
-    //console.log("result: ", result);
-    //console.log("error: ", errorString);
+    console.log("result: ", result);
+    console.log("error: ", errorMsg);
 
-    if (result) { return result; }
+    if (result) { return "Spawn transaction sent."; }
 
-    return errorString;
+    return errorMsg;
 
 }

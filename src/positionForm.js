@@ -1,8 +1,10 @@
 import React from 'react';
 import { spawnPosition } from './main'
+import { connectDarkForest } from './main'
 
 class PositionForm extends React.Component {
     constructor(props) {
+        connectDarkForest();
         super(props);
         this.state = { x: '', y: '' }
 
@@ -24,17 +26,7 @@ class PositionForm extends React.Component {
         event.preventDefault();
         let response = await spawnPosition(parseInt(this.state.x), parseInt(this.state.y));
         console.log("response: ", response);
-        let result;
-        if ((typeof response)!="string") {
-            result = "Spawn success.";
-        } else if (response.includes('Other players have spawned at this position within the last 5 minutes.')) {
-            result = 'Other players have spawned at this position within the last 5 minutes.'
-        } else if (response.includes('This position is currently occupied by another player.')) {
-            result  = 'This position is currently occupied by another player.'
-        } else {
-            result = response;
-        }
-        alert(result);
+        alert(response);
         event.preventDefault();
     }
 
