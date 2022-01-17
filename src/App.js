@@ -59,7 +59,7 @@ function App() {
     const { ethereum } = window;
     let chainId = await ethereum.request({ method: 'eth_chainId' });
     console.log("Chain ID:", chainId, parseInt(chainId));
-    setCorrectChain(parseInt(chainId) == 31337);
+    setCorrectChain(parseInt(chainId) == 1666700000);
   }
 
   useEffect(() => {
@@ -70,7 +70,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        { (currentAccount&&correctChain) ? <PositionForm /> : ( currentAccount ? <Alert severity="warning"> Please make sure you are connected to the correct network (Chain ID: 31337) in MetaMask then reload the page.</Alert> : connectWalletButton())}
+        { (currentAccount&&correctChain) ? <PositionForm /> : ( currentAccount ? <Alert severity="warning"> Please make sure you are connected to the correct network (Chain ID: 1666700000) in MetaMask then reload the page.</Alert> : connectWalletButton())}
       </div>
     </div>
   );
