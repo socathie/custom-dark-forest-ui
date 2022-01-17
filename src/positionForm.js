@@ -36,7 +36,7 @@ class PositionForm extends React.Component {
                 Only positive integer inputs are allowed.<br/>
                 <label>
                     x:
-                    <input type="text" pattern="\d+"value={this.state.x} onChange={this.handleChangeX} />
+                    <input type="text" pattern="\d+" value={this.state.x} onChange={this.handleChangeX} />
                 </label><br/><label>
                     y:
                     <input type="text" pattern="\d+" value={this.state.y} onChange={this.handleChangeY} />

@@ -27,15 +27,19 @@ export async function spawnPosition(x, y) {
 
     let errorMsg;
 
-    let result = await darkForest.spawn(calldata[0], calldata[1], calldata[2], calldata[3])
+    let spawnTxn = await darkForest.spawn(calldata[0], calldata[1], calldata[2], calldata[3])
         .catch((error) => {
             errorMsg = error.data.message;
         });
 
-    console.log("result: ", result);
+    console.log("transaction: ", spawnTxn);
     console.log("error: ", errorMsg);
 
-    if (result) { return "Spawn transaction sent."; }
+    if (spawnTxn) {
+        alert('Spawn transaction sent.')
+        await spawnTxn.wait();
+        return `Spawn transaction confirmed: ${spawnTxn.hash}`;
+    }
 
     return errorMsg;
 

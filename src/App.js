@@ -2,10 +2,13 @@
 import './App.css';
 import PositionForm from "./positionForm"
 import { useEffect, useState } from 'react';
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
 
 function App() {
 
   const [currentAccount, setCurrentAccount] = useState(null);
+  const [correctChain, setCorrectChain] = useState(null);
 
   const checkWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -16,7 +19,7 @@ function App() {
     } else {
       console.log("Wallet exists! We're ready to go!")
     }
-    
+
     const accounts = await ethereum.request({ method: 'eth_accounts' });
 
     if (accounts.length !== 0) {
@@ -46,20 +49,28 @@ function App() {
 
   const connectWalletButton = () => {
     return (
-      <button onClick={connectWalletHandler} className='cta-button connect-wallet-button'>
+      <Button onClick={connectWalletHandler} variant="contained">
         Connect Wallet
-      </button>
+      </Button>
     )
+  }
+
+  const checkChainId = async () => {
+    const { ethereum } = window;
+    let chainId = await ethereum.request({ method: 'eth_chainId' });
+    console.log("Chain ID:", chainId, parseInt(chainId));
+    setCorrectChain(parseInt(chainId) == 31337);
   }
 
   useEffect(() => {
     checkWalletIsConnected();
+    checkChainId();
   }, [])
 
   return (
     <div className="App">
       <div>
-        {currentAccount ? <PositionForm /> : connectWalletButton()}
+        { (currentAccount&&correctChain) ? <PositionForm /> : ( currentAccount ? <Alert severity="warning"> Please make sure you are connected to the correct network (Chain ID: 31337) in MetaMask then reload the page.</Alert> : connectWalletButton())}
       </div>
     </div>
   );

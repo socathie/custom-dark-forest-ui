@@ -2,18 +2,3 @@
   text-align: center;
   margin: 100px;
 }
-
-.cta-button {
-  padding: 15px;
-  border: none;
-  border-radius: 12px;
-  min-width: 250px;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  margin: 15px;
-}
-
-.connect-wallet-button {
-  background: rgb(32, 129, 226);
-}
