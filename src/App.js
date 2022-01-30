@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 
+const testnetChainId = '0x6357d2e0';
+
 function App() {
 
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -59,7 +61,17 @@ function App() {
     const { ethereum } = window;
     let chainId = await ethereum.request({ method: 'eth_chainId' });
     console.log("Chain ID:", chainId, parseInt(chainId));
-    setCorrectChain(parseInt(chainId) == 1666700000);
+    setCorrectChain(chainId == testnetChainId);
+    if (chainId != testnetChainId) {
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{
+          chainId: testnetChainId
+        }], // chainId must be in hexadecimal numbers
+      });
+      chainId = await ethereum.request({ method: 'eth_chainId' });
+      setCorrectChain(chainId == testnetChainId);
+    }
   }
 
   useEffect(() => {
@@ -70,7 +82,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        { (currentAccount&&correctChain) ? <PositionForm /> : ( currentAccount ? <Alert severity="warning"> Please make sure you are connected to the correct network (Chain ID: 1666700000) in MetaMask then reload the page.</Alert> : connectWalletButton())}
+        {(currentAccount && correctChain) ? <PositionForm /> : (currentAccount ? <Alert severity="warning"> Please make sure you are connected to the correct network (Harmony testnet, Chain ID: 1666700000) in MetaMask then reload the page.</Alert> : connectWalletButton())}
       </div>
     </div>
   );
