@@ -61,17 +61,47 @@ function App() {
     const { ethereum } = window;
     let chainId = await ethereum.request({ method: 'eth_chainId' });
     console.log("Chain ID:", chainId, parseInt(chainId));
-    setCorrectChain(chainId == testnetChainId);
     if (chainId != testnetChainId) {
-      await ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{
-          chainId: testnetChainId
-        }], // chainId must be in hexadecimal numbers
-      });
-      chainId = await ethereum.request({ method: 'eth_chainId' });
-      setCorrectChain(chainId == testnetChainId);
+      try {
+        await ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{
+            chainId: testnetChainId
+          }], // chainId must be in hexadecimal numbers
+        });
+        chainId = await ethereum.request({ method: 'eth_chainId' });
+      } catch (error) {
+        // This error code indicates that the chain has not been added to MetaMask
+        // if it is not, then install it into the user MetaMask
+        if (error.code == 4902) {
+          try {
+            await ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: testnetChainId,
+                  chainName: 'Harmony Testnet',
+                  nativeCurrency: {
+                    name: 'ONE',
+                    symbol: 'ONE',
+                    decimals: 18
+                  },
+                  rpcUrls: ['https://api.s0.b.hmny.io'],
+                  blockExplorerUrls: ['https://explorer.pops.one']
+                },
+              ],
+            });
+          } catch (addError) {
+            console.error(addError);
+          }
+        }
+        console.error(error);
+      }
+      window.location.reload();
     }
+
+    setCorrectChain(chainId == testnetChainId);
+
   }
 
   useEffect(() => {
